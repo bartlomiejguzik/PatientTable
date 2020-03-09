@@ -53,7 +53,7 @@
     <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
         <tr [pEditableRow]="rowData">
             <td>
-                {{ri + 1}}
+                {{rowData.code}}
             </td>
             <td>
                 <p-cellEditor>
@@ -119,10 +119,12 @@
                 <p-cellEditor>
                     <ng-template pTemplate="input">
                         <p-dropdown [options]="active" [(ngModel)]="rowData.active" [style]="{'width':'100%'}">
-                        </p-dropdown>
+                        </p-dropdown>                        
                     </ng-template>
                     <ng-template pTemplate="output">
                         {{rowData.active}}
+                        <!-- {{rowData.active ? 'Active' : 'Inactive'}} -->
+                        <!-- <p-checkbox [(ngModel)]="patient.active" value="patient.active" binary="true"></p-checkbox> -->
                     </ng-template>
                 </p-cellEditor>
             </td>
@@ -149,11 +151,19 @@
     <div class="ui-g ui-fluid" *ngIf="patient">
         <div class="ui-g-12">
             <div class="ui-g-4">
+                <label for="name">Code</label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText id="code" [(ngModel)]="patient.code" readonly="true"
+                    value="{{code}}" />
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
                 <label for="name">Name</label>
             </div>
             <div class="ui-g-8">
-                <input pInputText pKeyFilter="alpha" id="name" (keypress)="notNumber($event)" [(ngModel)]="patient.name"
-                    required="true" />
+                <input pInputText pKeyFilter="alpha" id="name" [(ngModel)]="patient.name">
             </div>
         </div>
         <div class="ui-g-12">
@@ -161,8 +171,7 @@
                 <label for="lastName">Last Name</label>
             </div>
             <div class="ui-g-8">
-                <input pInputText pKeyFilter="alpha" id="lastName" (keypress)="notNumber($event)"
-                    [(ngModel)]="patient.lastName" required="true" />
+                <input pInputText pKeyFilter="alpha" id="lastName" [(ngModel)]="patient.lastName" />
             </div>
         </div>
         <div class="ui-g-12">
@@ -170,7 +179,7 @@
                 <label for="email">Email</label>
             </div>
             <div class="ui-g-8">
-                <input pInputText pKeyFilter="email" id="email" [(ngModel)]="patient.email" [required]="true" />
+                <input pInputText pKeyFilter="email" id="email" [(ngModel)]="patient.email" />
             </div>
         </div>
         <div class="ui-g-12">
@@ -178,7 +187,7 @@
                 <label for="phone">Phone</label>
             </div>
             <div class="ui-g-8">
-                <input pInputText pKeyFilter="num" id="phone" [(ngModel)]="patient.phone" required="true" />
+                <input pInputText pKeyFilter="num" id="phone" [(ngModel)]="patient.phone" />
             </div>
         </div>
         <div class="ui-g-12">
@@ -186,8 +195,7 @@
                 <label for="city">City</label>
             </div>
             <div class="ui-g-8">
-                <input pInputText pKeyFilter="alpha" id="city" (keypress)="notNumber($event)"
-                    [(ngModel)]="patient.city" />
+                <input pInputText pKeyFilter="alpha" id="city" [(ngModel)]="patient.city" />
             </div>
         </div>
         <div class="ui-g-12">
@@ -195,8 +203,7 @@
                 <label for="municipality">Municipality</label>
             </div>
             <div class="ui-g-8">
-                <input pInputText pKeyFilter="alpha" id="municipality" (keypress)="notNumber($event)"
-                    [(ngModel)]="patient.municipality" />
+                <input pInputText pKeyFilter="alpha" id="municipality" [(ngModel)]="patient.municipality" />
             </div>
         </div>
         <div class="ui-g-12">
@@ -206,6 +213,7 @@
             <div class="ui-g-8">
                 <p-dropdown [options]="active" [(ngModel)]="patient.active" placeholder="Select Activity "
                     [style]="{'width':'100%'}"></p-dropdown>
+                <!-- <p-checkbox [(ngModel)]="patient.active" binary="true"></p-checkbox> -->
             </div>
         </div>
 

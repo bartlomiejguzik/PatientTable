@@ -2,6 +2,17 @@ import { Component, OnInit } from "@angular/core";
 import { SelectItem } from "primeng/api";
 import { MenuItem } from "primeng/api";
 
+const INITIAL_PATIENT = {
+    code: null,
+    name: "",
+    lastName: "",
+    email: "",
+    phone: null,
+    city: "",
+    municipality: "",
+    active: ""
+};
+
 @Component({
     selector: "app-patient-table",
     templateUrl: "./patient-table.component.html",
@@ -9,9 +20,8 @@ import { MenuItem } from "primeng/api";
 })
 export class PatientTableComponent implements OnInit {
     displayDialog: boolean;
-    patient: Patient = {};
+    patient: Patient = INITIAL_PATIENT;
     selectedPatient: Patient;
-    newPatient: boolean;
     patients: Patient[];
     cols: any[];
     active: SelectItem[];
@@ -19,11 +29,12 @@ export class PatientTableComponent implements OnInit {
     clonedPatients: { [s: string]: Patient } = {};
     private items: MenuItem[];
     home: MenuItem;
+    code = this.getRandomNumber();
 
     ngOnInit() {
         this.patients = [
             {
-                code: 1,
+                code: this.getRandomNumber(),
                 name: "Jan",
                 lastName: "Nowak",
                 email: "jan@gmail.com",
@@ -33,7 +44,7 @@ export class PatientTableComponent implements OnInit {
                 active: "Inactive"
             },
             {
-                code: 2,
+                code: this.getRandomNumber(),
                 name: "Adam",
                 lastName: "Lis",
                 email: "adam@gmail.com",
@@ -43,7 +54,7 @@ export class PatientTableComponent implements OnInit {
                 active: "Inactive"
             },
             {
-                code: 3,
+                code: this.getRandomNumber(),
                 name: "Tomasz",
                 lastName: "Wojcik",
                 email: "tomasz@gmail.com",
@@ -53,7 +64,7 @@ export class PatientTableComponent implements OnInit {
                 active: "Inactive"
             },
             {
-                code: 4,
+                code: this.getRandomNumber(),
                 name: "Marek",
                 lastName: "Kot",
                 email: "marek@gmail.com",
@@ -63,7 +74,7 @@ export class PatientTableComponent implements OnInit {
                 active: "Active"
             },
             {
-                code: 5,
+                code: this.getRandomNumber(),
                 name: "Dominik",
                 lastName: "Drzewiecki",
                 email: "dominik@gmail.com",
@@ -73,7 +84,7 @@ export class PatientTableComponent implements OnInit {
                 active: "Active"
             },
             {
-                code: 6,
+                code: this.getRandomNumber(),
                 name: "Hubert",
                 lastName: "Kowalczyk",
                 email: "hubert@gmail.com",
@@ -109,6 +120,9 @@ export class PatientTableComponent implements OnInit {
             { field: "actions", header: "Actions" }
         ];
     }
+    getRandomNumber() {
+        return Math.floor(Math.random() * 10000);
+    }
     onRowEditInit(patient: Patient) {
         this.clonedPatients[patient.code] = { ...patient };
     }
@@ -120,37 +134,36 @@ export class PatientTableComponent implements OnInit {
         delete this.clonedPatients[patient.code];
     }
     showDialogToAdd() {
-        this.newPatient = true;
-        this.patient = {};
+        this.patient = {
+            code: this.getRandomNumber(),
+            name: "",
+            lastName: "",
+            email: "",
+            phone: null,
+            city: "",
+            municipality: "",
+            active: ""
+        };
         this.displayDialog = true;
     }
     save() {
-        let patients = [...this.patients];
-        if (this.newPatient) patients.push(this.patient);
-        else
-            patients[
-                this.patients.indexOf(this.selectedPatient)
-            ] = this.patient;
-
-        this.patients = patients;
-        this.patient = null;
+        this.patients.push(this.patient);
+        this.patient = INITIAL_PATIENT;
         this.displayDialog = false;
     }
     delete() {
-        let index = this.patients.indexOf(this.selectedPatient);
-        this.patients = this.patients.filter((val, i) => i != index);
-        this.patient = null;
+        this.patient = INITIAL_PATIENT;
         this.displayDialog = false;
     }
 }
 
 export interface Patient {
-    code?;
-    name?;
-    lastName?;
-    email?;
-    phone?;
-    city?;
-    municipality?;
-    active?;
+    code: number;
+    name: string;
+    lastName: string;
+    email: string;
+    phone: number;
+    city: string;
+    municipality: string;
+    active: string;
 }
