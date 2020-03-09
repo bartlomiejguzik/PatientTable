@@ -72,6 +72,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { TreeModule } from 'primeng/tree';
 import { TreeTableModule } from 'primeng/treetable';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
+import {KeyFilterModule} from 'primeng/keyfilter';
 
 import {AppComponent} from './app.component';
 import {AppMenuComponent, AppSubMenuComponent} from './app.menu.component';
@@ -98,6 +99,7 @@ import {CarService} from './demo/service/carservice';
 import {CountryService} from './demo/service/countryservice';
 import {EventService} from './demo/service/eventservice';
 import {NodeService} from './demo/service/nodeservice';
+import { PatientTableComponent } from './patient-table/patient-table.component';
 
 @NgModule({
     imports: [
@@ -171,7 +173,8 @@ import {NodeService} from './demo/service/nodeservice';
         TooltipModule,
         TreeModule,
         TreeTableModule,
-        VirtualScrollerModule
+        VirtualScrollerModule,
+        KeyFilterModule
     ],
     declarations: [
         AppComponent,
@@ -195,7 +198,8 @@ import {NodeService} from './demo/service/nodeservice';
         EmptyDemoComponent,
         FileDemoComponent,
         UtilsDemoComponent,
-        DocumentationComponent
+        DocumentationComponent,
+        PatientTableComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

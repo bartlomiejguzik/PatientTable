@@ -1,0 +1,219 @@
+<p-table class="table table-hover" [columns]="cols" [value]="patients" dataKey="code" editMode="row" [paginator]="true"
+    [rows]="5" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" #dt>
+    <ng-template pTemplate="caption">
+        <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+    </ng-template>
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col *ngFor="let col of columns">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns pResizableColumn>
+        <tr>
+            <th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon>
+            </th>
+            <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="lastName">Last Name <p-sortIcon field="lastName"></p-sortIcon>
+            </th>
+            <th pSortableColumn="color">Email <p-sortIcon field="email"></p-sortIcon>
+            </th>
+            <th pSortableColumn="phone">Phone <p-sortIcon field="phone"></p-sortIcon>
+            </th>
+            <th pSortableColumn="city">City <p-sortIcon field="city"></p-sortIcon>
+            </th>
+            <th pSortableColumn="municipality">Municipality <p-sortIcon field="municipality"></p-sortIcon>
+            </th>
+            <th pSortableColumn="active">Active <p-sortIcon field="active"></p-sortIcon>
+            </th>
+            <th>Actions</th>
+        </tr>
+        <tr>
+            <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                <input *ngSwitchCase="'code'" pInputText type="text"
+                    (input)="dt.filter($event.target.value, col.field, 'contains')">
+                <input *ngSwitchCase="'name'" pInputText type="text"
+                    (input)="dt.filter($event.target.value, col.field, 'contains')">
+                <input *ngSwitchCase="'lastName'" pInputText type="text"
+                    (input)="dt.filter($event.target.value, col.field, 'contains')">
+                <input *ngSwitchCase="'email'" pInputText type="text"
+                    (input)="dt.filter($event.target.value, col.field, 'contains')">
+                <input *ngSwitchCase="'phone'" pInputText type="text"
+                    (input)="dt.filter($event.target.value, col.field, 'contains')">
+                <input *ngSwitchCase="'city'" pInputText type="text"
+                    (input)="dt.filter($event.target.value, col.field, 'contains')">
+                <input *ngSwitchCase="'municipality'" pInputText type="text"
+                    (input)="dt.filter($event.target.value, col.field, 'contains')">
+                <p-dropdown *ngSwitchCase="'active'" [options]="filterActive" [style]="{'width':'100%'}"
+                    (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
+
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+        <tr [pEditableRow]="rowData">
+            <td>
+                {{ri + 1}}
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input type="text" pInputText pKeyFilter="alpha" [(ngModel)]="rowData.name">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{rowData.name}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input type="text" pInputText pKeyFilter="alpha" [(ngModel)]="rowData.lastName">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{rowData.lastName}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input type="text" pInputText pKeyFilter="email" [(ngModel)]="rowData.email">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{rowData.email}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input type="text" pInputText pKeyFilter="num" [(ngModel)]="rowData.phone">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{rowData.phone}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input type="text" pInputText pKeyFilter="alpha" [(ngModel)]="rowData.city">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{rowData.city}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input type="text" pInputText pKeyFilter="alpha" [(ngModel)]="rowData.municipality">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{rowData.municipality}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-dropdown [options]="active" [(ngModel)]="rowData.active" [style]="{'width':'100%'}">
+                        </p-dropdown>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{rowData.active}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td style="text-align:center">
+                <button *ngIf="!editing" pButton type="button" pInitEditableRow icon="pi pi-pencil"
+                    class="ui-button-info" (click)="onRowEditInit(rowData)" pTooltip="Edit row"></button>
+                <button *ngIf="editing" pButton type="button" pSaveEditableRow icon="pi pi-check"
+                    class="ui-button-success" style="margin-right: .5em" (click)="onRowEditSave(rowData)"
+                    pTooltip="Accept"></button>
+                <button *ngIf="editing" pButton type="button" pCancelEditableRow icon="pi pi-times"
+                    class="ui-button-danger" (click)="onRowEditCancel(rowData, ri)" pTooltip="Cancel"></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+        <div style="text-align:right">
+            <button type="button" pButton icon="pi pi-plus" (click)="showDialogToAdd()" label="Add new"></button>
+        </div>
+    </ng-template>
+</p-table>
+
+<p-dialog header="Patient Details" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true"
+    showEffect="fade" [modal]="true" [style]="{width: '400px'}">
+    <div class="ui-g ui-fluid" *ngIf="patient">
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="name">Name</label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText pKeyFilter="alpha" id="name" (keypress)="notNumber($event)" [(ngModel)]="patient.name"
+                    required="true" />
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="lastName">Last Name</label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText pKeyFilter="alpha" id="lastName" (keypress)="notNumber($event)"
+                    [(ngModel)]="patient.lastName" required="true" />
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="email">Email</label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText pKeyFilter="email" id="email" [(ngModel)]="patient.email" [required]="true" />
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="phone">Phone</label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText pKeyFilter="num" id="phone" [(ngModel)]="patient.phone" required="true" />
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="city">City</label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText pKeyFilter="alpha" id="city" (keypress)="notNumber($event)"
+                    [(ngModel)]="patient.city" />
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="municipality">Municipality</label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText pKeyFilter="alpha" id="municipality" (keypress)="notNumber($event)"
+                    [(ngModel)]="patient.municipality" />
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="active">Active</label>
+            </div>
+            <div class="ui-g-8">
+                <p-dropdown [options]="active" [(ngModel)]="patient.active" placeholder="Select Activity "
+                    [style]="{'width':'100%'}"></p-dropdown>
+            </div>
+        </div>
+
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+            <button type="button" pButton icon="pi pi-times" (click)="delete()" label="Delete"></button>
+            <button type="button" pButton icon="pi pi-check" (click)="save()" label="Save"></button>
+        </div>
+    </p-footer>
+</p-dialog>

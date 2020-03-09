@@ -1,0 +1,7 @@
+{
+    "data": [
+        {"code": "1", "name": "Jan", "lastName": "Nowak", "email": "jan@gmail.com", "phone": "782345982", "city": "Gliwice", "municipality": "Slaskie"},
+        {"code": "2", "name": "Adam", "lastName": "Kowalski", "email": "adam@gmail.com", "phone": "782343472", "city": "Katowice", "municipality": "Slaskie"},
+        {"code": "3", "name": "Marek", "lastName": "Wojcik", "email": "marek@gmail.com", "phone": "567345982", "city": "Zabrze", "municipality": "Slaskie"} 
+    ]
+}
